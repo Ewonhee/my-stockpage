@@ -8,20 +8,25 @@ const StocksPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/api/stock/isu');
-        setStockData(response.data.OutBlock_1);
-        setLoading(false);
-      } catch (error) {
-        console.error('데이터를 불러오는 중 오류가 발생했습니다:', error); // 데이터를 불러오는 중 오류가 발생했습니다
-      }
-    };
+    if (selectedDate) {
+      fetchData(selectedDate);
+    }
+  }, [selectedDate]);
 
-    fetchData();
-  }, []);
+  const fetchData = async (targetDate) => {
+    try {
+      const response = await axios.get(`/api/stock/isu?date=${targetDate}`);
+      setStockData(response.data.OutBlock_1);
+      setLoading(false);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -38,9 +43,19 @@ const StocksPage = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleDateChange = event => {
+    setSelectedDate(event.target.value);
+  };
+
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center' }}>코스피 주식 거래 정보</h1> {/* KOSPI Day Trade Information -> 코스피 주식 거래 정보 */}
+      <h1 style={{ textAlign: 'center' }}>코스피 주식 거래 정보</h1>
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={handleDateChange}
+        style={{ width: '100%', padding: '8px', marginBottom: '20px' }}
+      />
       <input
         type="text"
         placeholder="검색..."
@@ -52,9 +67,7 @@ const StocksPage = () => {
         <p>로딩 중...</p> 
       ) : (
         <div>
-          {filteredData.length === 0 ? (
-            <p>데이터가 없습니다.</p> 
-          ) : (
+          {filteredData && filteredData.length > 0 ? (
             <div>
               {filteredData.map(stock => (
                 <div
@@ -81,9 +94,12 @@ const StocksPage = () => {
                   <p className="data-value" >누적 거래대금: {stock.ACC_TRDVAL}</p> {/* ACC_TRDVAL: -> 누적 거래대금: */}
                   <p className="data-value" >시가총액: {stock.MKTCAP}</p> {/* MKTCAP: -> 시가총액: */}
                   <p className="data-value" >상장주식수: {stock.LIST_SHRS}</p> {/* LIST_SHRS: -> 상장주식수: */}
+                  {/* 기타 데이터 표시 */}
                 </div>
               ))}
             </div>
+          ) : (
+            <p>데이터가 없습니다.</p>
           )}
         </div>
       )}
