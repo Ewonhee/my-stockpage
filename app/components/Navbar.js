@@ -16,8 +16,9 @@ function CustomNavbar() {
           <Nav className="ml-auto">
             <Nav.Link href="./" style={{ borderBottom: '2px solid white' }}>Home</Nav.Link>
             <Nav.Link href='./Search' style={{ borderBottom: '2px solid white' }}>Search</Nav.Link>
-            <Nav.Link href="./list" style={{ borderBottom: '2px solid white' }}>List</Nav.Link>
-            <Nav.Link href="#test" style={{ borderBottom: '2px solid white' }}>test</Nav.Link>
+            <Nav.Link href="#Chat" style={{ borderBottom: '2px solid white' }}>Chat</Nav.Link>
+            <Nav.Link href="#Talk" style={{ borderBottom: '2px solid white' }}>Talk</Nav.Link>
+            <Nav.Link href="./function_test" style={{ borderBottom: '2px solid white' }}>test</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

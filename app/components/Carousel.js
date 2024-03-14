@@ -34,4 +34,6 @@ function UncontrolledExample() {
     );
 }
 
+// 이미지 카드 동적으로 정리하기
+
 export default UncontrolledExample;
