@@ -43,3 +43,38 @@ padding-top: 100px; /* Navbar의 높이에 맞게 조절 */
   height: 50vh; /* 창 높이의 1/3 */
 }
 
+.chart-container {
+  width: 50%;
+  height: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f8ff; /* 파랑색 */
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  background-color: #0074d9; /* 파랑색 */
+  color: #fff; /* 흰색 */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabs button.active {
+  background-color: #fff; /* 흰색 */
+  color: #0074d9; /* 파랑색 */
+}
+
+.tabs button:hover {
+  background-color: #0056b3; /* 진한 파랑색 */
+}

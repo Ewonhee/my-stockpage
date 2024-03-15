@@ -1,25 +1,22 @@
-const exampleStockData = [
-    { date: '2022-01-01', closePrice: 130 },
-    { date: '2022-01-02', closePrice: 110 },
-    { date: '2022-01-03', closePrice: 120 },
-    { date: '2022-01-04', closePrice: 105 },
-    { date: '2022-01-05', closePrice: 130 },
-    { date: '2022-01-06', closePrice: 140 },
-    { date: '2022-01-07', closePrice: 150 },
-    { date: '2022-01-08', closePrice: 145 },
-    { date: '2022-01-09', closePrice: 100 },
-    { date: '2022-01-10', closePrice: 155 },
-    { date: '2022-01-11', closePrice: 170 },
-    { date: '2022-01-12', closePrice: 165 },
-    { date: '2022-01-13', closePrice: 180 },
-    { date: '2022-01-14', closePrice: 175 },
-    { date: '2022-01-15', closePrice: 190 },
-    { date: '2022-01-16', closePrice: 185 },
-    { date: '2022-01-17', closePrice: 200 },
-    { date: '2022-01-18', closePrice: 195 },
-    { date: '2022-01-19', closePrice: 210 },
-    { date: '2022-01-20', closePrice: 205 },
-  ];
-  
-  export default exampleStockData;
-  
+const generateExampleStockData = (startDate, endDate) => {
+  const exampleStockData = [];
+  const currentDate = new Date(startDate);
+
+  // 시작일부터 종료일까지의 데이터 생성
+  while (currentDate <= endDate) {
+    const date = currentDate.toISOString().split('T')[0];
+    const closePrice = Math.floor(Math.random() * 200) + 100; // 100부터 300 사이의 랜덤 가격 생성
+    exampleStockData.push({ date, closePrice });
+
+    // 다음 날로 이동
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return exampleStockData;
+};
+
+const startDate = new Date('2023-03-14');
+const endDate = new Date('2024-03-15');
+const exampleStockData = generateExampleStockData(startDate, endDate);
+
+export default exampleStockData;

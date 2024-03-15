@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale, BarElement } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import exampleStockData from './exampleStockData'; // 예시 데이터 가져오기
-// import styles from './StockChart.module.css'; // global.css 대신 StockChart.module.css를 import
+import exampleStockData from './exampleStockData';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale, BarElement);
 
@@ -13,17 +12,14 @@ const StockChart = () => {
   const [chartData, setChartData] = useState(null);
   const [highestPrice, setHighestPrice] = useState(null);
   const [lowestPrice, setLowestPrice] = useState(null);
+  const [selectedTab, setSelectedTab] = useState('3M'); // Default: 3개월 선택
 
   useEffect(() => {
     if (exampleStockData) {
-      const labels = [];
-      const prices = [];
-      
-      // 데이터 5일 간격으로 필터링
-      for (let i = 0; i < exampleStockData.length; i += 5) {
-        labels.push(exampleStockData[i].date);
-        prices.push(exampleStockData[i].closePrice);
-      }
+      const currentDate = new Date();
+      const filteredData = filterDataByMonths(exampleStockData, currentDate, selectedTab);
+      const labels = filteredData.map(data => data.date);
+      const prices = filteredData.map(data => data.closePrice);
       
       // 고점과 저점 찾기
       const highest = Math.max(...prices);
@@ -36,7 +32,7 @@ const StockChart = () => {
         labels: labels,
         datasets: [
           {
-            label: 'Stock Prices (Line)',
+            label: 'Stock Prices',
             data: prices,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -46,31 +42,39 @@ const StockChart = () => {
               if (price === lowest) return 'blue'; // 저점일 때 파란색
               return 'rgba(0, 0, 0, 0)'; // 그 외에는 투명색
             })
-          },
-          {
-            label: 'Stock Prices (Bar)',
-            data: prices,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
           }
         ],
       });
     }
-  }, []);
+  }, [selectedTab]); // selectedTab이 변경될 때마다 useEffect 재실행
 
- 
+  const handleTabChange = (tab) => {
+    setSelectedTab(tab);
+  };
+
+  const filterDataByMonths = (data, currentDate, selectedTab) => {
+    const monthsMap = {
+      '3M': 3,
+      '6M': 6,
+      '12M': 12
+    };
+    const monthsDiff = monthsMap[selectedTab];
+    return data.filter(data => {
+      const dataDate = new Date(data.date);
+      const monthsDiffCurrent = (currentDate.getFullYear() - dataDate.getFullYear()) * 12 + (currentDate.getMonth() - dataDate.getMonth());
+      return monthsDiffCurrent <= monthsDiff;
+    });
+  };
 
   return (
-    <div className='chart-container'> {/* global.css 대신 StockChart.module.css를 사용 */}
+    <div className='chart-container'>
+      <div className='tabs'>
+        <button className={selectedTab === '3M' ? 'active' : ''} onClick={() => handleTabChange('3M')}>최근 3개월</button>
+        <button className={selectedTab === '6M' ? 'active' : ''} onClick={() => handleTabChange('6M')}>최근 6개월</button>
+        <button className={selectedTab === '12M' ? 'active' : ''} onClick={() => handleTabChange('12M')}>최근 12개월</button>
+      </div>
       {chartData && (
-        <div>
-          <div>
-            <h3>고점: {highestPrice}</h3>
-          </div>
-          <div>
-            <h3>저점: {lowestPrice}</h3>
-          </div>
+        <div> 
           <Line
             data={{
               labels: chartData.labels,
@@ -86,36 +90,16 @@ const StockChart = () => {
               ],
             }}
             options={{
-              scales: {
-                x: {
-                  type: 'time', // 시간 축으로 설정
-                  time: {
-                    unit: 'day'
-                  }
-                },
-                y: {
-                  beginAtZero: true,
-                },
+              plugins: {
+                title: {
+                  display: true,
+                  text: `고점: ${highestPrice}, 저점: ${lowestPrice}`,
+                  position: 'bottom'
+                }
               },
-            }}
-          />
-          <Bar
-            data={{
-              labels: chartData.labels,
-              datasets: [
-                {
-                  label: chartData.datasets[1].label,
-                  data: chartData.datasets[1].data,
-                  backgroundColor: chartData.datasets[1].backgroundColor,
-                  borderColor: chartData.datasets[1].borderColor,
-                  borderWidth: chartData.datasets[1].borderWidth
-                },
-              ],
-            }}
-            options={{
               scales: {
                 x: {
-                  type: 'time', // 시간 축으로 설정
+                  type: 'time',
                   time: {
                     unit: 'day'
                   }
