@@ -93,7 +93,7 @@ const StockChart = () => {
               plugins: {
                 title: {
                   display: true,
-                  text: `고점: ${highestPrice}, 저점: ${lowestPrice}`,
+                  text: `⬆️고점: ${highestPrice} / ⬇️저점: ${lowestPrice}`,
                   position: 'bottom'
                 }
               },
