@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const url = URL_STOCK_KOSPI_DAY_TRADE + urlInput + targetDate;
   const headers = {
     'AUTH_KEY': '179EFED4186342CC979B9F82064283D3DA46740A' // 샘플 인증 키
-  };
+  };  
 
   console.log(targetDate)
 
