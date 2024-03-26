@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <main>
-      {result[0].content}
+      <h1>테스트 페이지 입니다</h1>
     </main>
   )
 }
