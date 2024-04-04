@@ -2,6 +2,9 @@ import { connectDB } from "@/util/database"; // 데이터베이스 연결 함수
 import { ObjectId } from "mongodb"; // MongoDB ObjectId를 사용하기 위해 가져옵니다.
 import { Container, Row, Col, Button } from 'react-bootstrap'; // React Bootstrap에서 필요한 컴포넌트를 가져옵니다.
 import DeleteButton from "./DeleteButton"; // 삭제 버튼 컴포넌트를 가져옵니다.
+import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
+
 
 // Detail 컴포넌트 정의
 export default async function Detail(props) {
@@ -10,6 +13,8 @@ export default async function Detail(props) {
     const db = await client.db('forum');
     const result = await db.collection('post').findOne({_id : new ObjectId(props.params.id)});
     
+    let parent = props.params.id
+
     return (
         // 상세 페이지 컨테이너
         <Container className="detail-container">
@@ -39,6 +44,12 @@ export default async function Detail(props) {
                             <Button className='detail-button'>👎</Button>
                         </div>
                     </div>
+                    <div className="CommentForm">
+                    <CommentForm parent ={parent}/>
+                    <CommentList parent ={parent}/>
+                    </div>
+                    
+                    
                 </Col>
             </Row>
         </Container>
