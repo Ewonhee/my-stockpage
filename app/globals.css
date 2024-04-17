@@ -232,3 +232,58 @@ padding-top: 100px; /* Navbar의 높이에 맞게 조절 */
   opacity: 1; /* 마우스를 올리면 나타남 */
 }
 
+.register_container {
+  
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register_container h2{
+  font-weight: bold;
+ text-align: center;
+}
+
+.register_container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register_container input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.register_container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.register_container button:hover {
+  background-color: #0056b3;
+}
+
+.login{
+  margin-left: 700px;
+}
+
+.loginname {
+  margin-right: auto;
+  color: #fff; /* 텍스트 색상을 흰색으로 설정합니다. */
+  font-weight: bold; /* 텍스트를 굵게 표시합니다. */
+  font-size: 16px; /* 텍스트 크기를 조정합니다. */
+  text-transform: capitalize; /* 텍스트를 대문자로 변환합니다. */
+  text-decoration: none; /* 텍스트에 밑줄을 제거합니다. */
+  margin-right: 20px; /* 오른쪽 여백을 추가합니다. */
+}
