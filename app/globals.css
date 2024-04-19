@@ -275,15 +275,17 @@ padding-top: 100px; /* Navbar의 높이에 맞게 조절 */
 }
 
 .login{
-  margin-left: 700px;
+  margin-left: 600px;
 }
 
 .loginname {
-  margin-right: auto;
+  margin-right: 20px; /* 오른쪽 여백을 추가합니다. */
+  white-space: nowrap; /* 텍스트가 넘칠 때 줄 바꿈을 방지합니다. */
+  overflow: hidden; /* 텍스트가 요소의 영역을 넘어갈 경우 숨깁니다. */
+  text-overflow: ellipsis; /* 텍스트가 요소의 영역을 넘어갈 경우 생략 부호를 표시합니다. */
   color: #fff; /* 텍스트 색상을 흰색으로 설정합니다. */
   font-weight: bold; /* 텍스트를 굵게 표시합니다. */
   font-size: 16px; /* 텍스트 크기를 조정합니다. */
   text-transform: capitalize; /* 텍스트를 대문자로 변환합니다. */
   text-decoration: none; /* 텍스트에 밑줄을 제거합니다. */
-  margin-right: 20px; /* 오른쪽 여백을 추가합니다. */
 }

@@ -11,6 +11,7 @@ import { SessionProvider, useSession } from 'next-auth/react';
 function CustomNavbar() {
   const { data: session } = useSession();
 
+
   return (
     <nav style={{ position: 'fixed', top: '0', left: '0', right: '0', zIndex: '1000' }}>
       <Navbar className='navbar-custom' bg="primary" expand="lg" style={{ fontStyle: 'italic' }}>
@@ -22,13 +23,13 @@ function CustomNavbar() {
             <Nav.Link href='/Search' style={{ borderBottom: '2px solid white' }}>Search</Nav.Link>
             <Nav.Link href="/function_test" style={{ borderBottom: '2px solid white' }}>Chat</Nav.Link>
             <Nav.Link href="/talk" style={{ borderBottom: '2px solid white' }}>Talk</Nav.Link>
-            <Nav.Link href="./test" style={{ borderBottom: '2px solid white' }}>test</Nav.Link>
+            <Nav.Link href="./test" style={{ borderBottom: '2px solid white' }}>Signup</Nav.Link>
             <div className='login'>
               {session ? (
-                <div>
+                <>
                   <span className='loginname'>{session.user.name}</span>
                   <Logoutbtn/>
-                </div>
+                </>
               ) : (
                 <Loginbtn />
               )}
